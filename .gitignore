@@ -45,12 +45,35 @@ nbdist/
 nbactions.xml
 nb-configuration.xml
 
-
 # OS
 .DS_Store
+Thumbs.db
 
 # Misc
 *.swp
 release.properties
 pom.xml.releaseBackup
 pom.xml.tag
+
+# e2e
+/e2e/*.js
+/e2e/*.map
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+testem.log
+/typings
+
+# compiled output
+/dist
+/dist-server
+/tmp
+/out-tsc
+
+
+
+/node_modules/
