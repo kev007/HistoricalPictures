@@ -162,6 +162,10 @@ exports.getFileUpload = (req, res) => {
 };
 
 exports.postFileUpload = (req, res) => {
+  const id = req.user.id;
+  const filename = req.file.filename;
+  const startTime = req._startTime;
+
   req.flash('success', { msg: 'File was uploaded successfully.' });
   res.redirect('/api/upload');
 };
