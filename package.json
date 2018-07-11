@@ -9,7 +9,8 @@
   "author": "Kevin Shrestha",
   "license": "MIT",
   "scripts": {
-    "postinstall": "cp node_modules/popper.js/dist/popper.min.* public/js/lib && cp node_modules/bootstrap/dist/js/bootstrap.min.* public/js/lib && cp node_modules/jquery/dist/jquery.min.* public/js/lib && npm rebuild node-sass",
+    "pretest": "eslint --ignore-path .gitignore .",
+    "postinstall": "npm rebuild node-sass",
     "start": "node app.js",
     "test": "nyc mocha --timeout=3000 --exit",
     "lint": "eslint **/*.js"
@@ -19,6 +20,7 @@
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.1.1",
+    "bower": "^1.8.4",
     "chalk": "^2.4.1",
     "compression": "^1.7.2",
     "connect-mongo": "^2.0.1",
@@ -31,7 +33,7 @@
     "express-validator": "^5.2.0",
     "fbgraph": "^1.4.4",
     "jquery": "^3.3.1",
-    "lob": "^5.3.0",
+    "lob": "^6.0.0",
     "lusca": "^1.6.0",
     "mongoose": "^5.2.2",
     "morgan": "^1.9.0",
@@ -63,7 +65,7 @@
     "eslint-plugin-import": "^2.13.0",
     "mocha": "^5.2.0",
     "nyc": "^12.0.2",
-    "sinon": "^4.5.0",
+    "sinon": "^6.1.0",
     "sinon-mongoose": "^2.2.1",
     "supertest": "^3.1.0"
   },
