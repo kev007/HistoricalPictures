@@ -33,6 +33,7 @@ dotenv.load({ path: '.env.example' });
 const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
+const pictureController = require('./controllers/picture');
 const contactController = require('./controllers/contact');
 
 /**
@@ -86,7 +87,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 app.use((req, res, next) => {
-  if (req.path === '/api/upload') {
+  if (req.path === '/picture/upload') {
     next();
   } else {
     lusca.csrf()(req, res, next);
@@ -150,11 +151,12 @@ app.get('/api/twitter', passportConfig.isAuthenticated, passportConfig.isAuthori
 app.post('/api/twitter', passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.postTwitter);
 app.get('/api/linkedin', passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.getLinkedin);
 app.get('/api/lob', apiController.getLob);
-app.get('/api/upload', apiController.getFileUpload);
-app.post('/api/upload', upload.single('myFile'), apiController.postFileUpload);
 app.get('/api/pinterest', passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.getPinterest);
 app.post('/api/pinterest', passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.postPinterest);
 app.get('/api/google-maps', apiController.getGoogleMaps);
+
+app.get('/picture/upload', pictureController.getFileUpload);
+app.post('/picture/upload', upload.single('myFile'), pictureController.postFileUpload);
 
 /**
  * OAuth authentication routes. (Sign in)
