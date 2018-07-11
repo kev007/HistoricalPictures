@@ -18,9 +18,19 @@ const passport = require('passport');
 const expressValidator = require('express-validator');
 const expressStatusMonitor = require('express-status-monitor');
 const sass = require('node-sass-middleware');
+const crypto = require('crypto');
 const multer = require('multer');
 
-const upload = multer({ dest: path.join(__dirname, 'uploads') });
+const multerOptions = {
+  storage: multer.diskStorage({
+    destination: path.join(__dirname, 'uploads'),
+    filename: function (req, file, cb) {
+      cb(null, crypto.randomBytes(24).toString('hex') + path.extname(file.originalname))
+    }
+  }),
+  preservePath: true
+};
+const upload = multer(multerOptions);
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.

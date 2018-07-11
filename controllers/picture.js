@@ -4,7 +4,6 @@ const Picture = require('../models/Picture');
  * GET /picture/upload
  * File Upload API example.
  */
-
 exports.getFileUpload = (req, res) => {
   res.render('api/upload', {
     title: 'File Upload'
