@@ -1,9 +1,6 @@
-// SEE: https://stackoverflow.com/questions/17246981/store-models-in-folder-use-index-js-to-require-them-all
-
 const mongoose = require('mongoose');
-//const User = require('User.js');
 
-const pictureSchema = new mongoose.Schema({
+const uploadSchema = new mongoose.Schema({
   filename: { type: String, unique: true },
   user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   file: {
@@ -19,6 +16,6 @@ const pictureSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 
-const Picture = mongoose.model('Picture', pictureSchema);
+const Upload = mongoose.model('Upload', uploadSchema);
 
-module.exports = Picture;
+module.exports = Upload;

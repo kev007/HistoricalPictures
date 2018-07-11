@@ -20,6 +20,13 @@ const userSchema = new mongoose.Schema({
     location: String,
     website: String,
     picture: String
+  },
+
+  gamification: {
+    adminPrivileges: Boolean,
+    exp: Number,
+    uploadCount: Number,
+    reviewCount: Number
   }
 }, { timestamps: true });
 
@@ -61,6 +68,28 @@ userSchema.methods.gravatar = function gravatar(size) {
   const md5 = crypto.createHash('md5').update(this.email).digest('hex');
   return `https://gravatar.com/avatar/${md5}?s=${size}&d=retro`;
 };
+
+
+/**
+ * Helper method for gamification: Experience.
+ */
+userSchema.methods.addExperience = function addExperience(value) {
+  this.gamification.exp += value;
+};
+/**
+ * Helper method for gamification: uploadCount.
+ */
+userSchema.methods.incrementUpload = function incrementUpload(value) {
+  this.gamification.uploadCount += value;
+};
+/**
+ * Helper method for gamification: reviewCount.
+ */
+userSchema.methods.incrementReviews = function incrementReviews(value) {
+  this.gamification.reviewCount += value;
+};
+
+
 
 const User = mongoose.model('User', userSchema);
 

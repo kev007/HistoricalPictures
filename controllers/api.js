@@ -135,7 +135,6 @@ exports.getLinkedin = (req, res, next) => {
   });
 };
 
-
 /**
  * GET /api/lob
  * Lob API example.

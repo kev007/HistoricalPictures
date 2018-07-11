@@ -34,7 +34,7 @@ cd HistoricalPictures
 # Install NPM dependencies
 npm install
 
-# Then simply start the app
+# Then simply start the app (make sure MongoDB is listening on port 27017)
 node app.js
 ```
 

@@ -94,7 +94,14 @@ exports.postSignup = (req, res, next) => {
 
   const user = new User({
     email: req.body.email,
-    password: req.body.password
+    password: req.body.password,
+
+    gamification: {
+      adminPrivileges: false,
+      exp: 0,
+      uploadCount: 0,
+      reviewCount: 0
+    }
   });
 
   User.findOne({ email: req.body.email }, (err, existingUser) => {
