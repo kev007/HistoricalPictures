@@ -100,7 +100,8 @@ exports.postSignup = (req, res, next) => {
       adminPrivileges: false,
       exp: 0,
       uploadCount: 0,
-      reviewCount: 0
+      reviewCount: 0,
+      strikes: 0,
     }
   });
 

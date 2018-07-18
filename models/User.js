@@ -26,7 +26,10 @@ const userSchema = new mongoose.Schema({
     adminPrivileges: Boolean,
     exp: Number,
     uploadCount: Number,
-    reviewCount: Number
+    reviewCount: Number,
+    commentCount: Number,
+    strikes: Number,
+    achievements: {type: mongoose.Schema.Types.ObjectId, ref: 'Achievements'},
   }
 }, { timestamps: true });
 
