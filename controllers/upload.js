@@ -3,32 +3,44 @@ const Upload = require('../models/Upload');
 const User = require('../models/User');
 const Gamification = require('./applicationLogic/gamification.js');
 
+
 function saveFilesForUser(files, userId) {
   User.findById(userId, (err, user) => {
     if (err) { return err; }
 
     files.forEach((file) => {
-      const exif = ExifImage({ image: `./uploads/${file.filename}` }, (error, exifData) => exifData.exifData);
+      try {
+        new ExifImage({image: `./uploads/${file.filename}`}, function (error, exifData) {
+          if (error) {
+            console.log('Error: ' + error.message);
+          } else {
+            //create new Upload object
+            const upload = new Upload({
+              filename: file.filename,
+              user: user._id,
+              file,
+              exif: exifData
+            });
 
-      const upload = new Upload({
-        filename: file.filename,
-        user: user._id,
-        file,
-        exif
-      });
+            //save created object
+            upload.save((err) => {
+              if (err) { return err; }
+            });
 
-      upload.save((err) => {
-        if (err) { return err; }
-      });
+            //reward user, then save
+            Gamification.rewardUserUploads(user, files);
+            user.save();
+          }
+        });
+      } catch (error) {
+        console.log('Error: ' + error.message);
+      }
     });
-
-    Gamification.rewardUserUploads(user, files);
-    user.save();
   });
 }
 
 
-/**
+  /**
  * GET /picture/upload
  * File Upload API example.
  */

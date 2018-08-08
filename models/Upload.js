@@ -15,7 +15,7 @@ const uploadSchema = new mongoose.Schema({
     path: String,
     size: Number
   },
-  exif: String
+  exif: Object
 }, { timestamps: true });
 
 
