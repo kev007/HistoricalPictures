@@ -8,11 +8,13 @@ function saveFilesForUser(files, userId) {
     if (err) { return err; }
 
     files.forEach((file) => {
+      const exif = ExifImage({ image: `./uploads/${file.filename}` }, (error, exifData) => exifData.exifData);
+
       const upload = new Upload({
         filename: file.filename,
         user: user._id,
         file,
-        exif: ExifImage({ image: `./uploads/${file.filename}` }, (error, exifData) => exifData.exifData)
+        exif
       });
 
       upload.save((err) => {
