@@ -1,0 +1,42 @@
+extends ../layout
+
+block content
+  .pb-2.mt-2.mb-4.border-bottom
+    h3 Profile Information
+
+  .form-group.row
+    label.col-md-3.col-form-label.font-weight-bold.text-right(for='email') Email
+    .col-md-7
+      input.form-control(readonly=true, type='email', name='email', id='email', value=user.email)
+  .form-group.row
+    label.col-md-3.col-form-label.font-weight-bold.text-right(for='name') Name
+    .col-md-7
+      input.form-control(readonly=true, type='text', name='name', id='name', value=user.profile.name)
+
+  .pb-2.mt-2.mb-4.border-bottom
+    h3 Statistics
+
+  .form-group.row
+    label.col-md-3.col-form-label.font-weight-bold.text-right(for='adminPrivileges') adminPrivileges
+    .col-md-7
+      input.form-control(readonly=true, type='text', name='adminPrivileges', id='adminPrivileges', value=user.gamification.adminPrivileges.toString())
+  .form-group.row
+    label.col-md-3.col-form-label.font-weight-bold.text-right(for='exp') XP
+    .col-md-7
+      input.form-control(readonly=true, type='number', name='exp', id='exp', value=user.gamification.exp)
+  .form-group.row
+    label.col-md-3.col-form-label.font-weight-bold.text-right(for='uploadCount') uploadCount
+    .col-md-7
+      input.form-control(readonly=true, type='number', name='uploadCount', id='uploadCount', value=user.gamification.uploadCount)
+  .form-group.row
+    label.col-md-3.col-form-label.font-weight-bold.text-right(for='reviewCount') reviewCount
+    .col-md-7
+      input.form-control(readonly=true, type='number', name='reviewCount', id='reviewCount', value=user.gamification.reviewCount)
+  .form-group.row
+    label.col-md-3.col-form-label.font-weight-bold.text-right(for='commentCount') commentCount
+    .col-md-7
+      input.form-control(readonly=true, type='number', name='commentCount', id='commentCount', value=user.gamification.commentCount)
+  .form-group.row
+    label.col-md-3.col-form-label.font-weight-bold.text-right(for='commentCount') strikes
+    .col-md-7
+      input.form-control(readonly=true, type='number', name='strikes', id='strikes', value=user.gamification.strikes)

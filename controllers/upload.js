@@ -9,11 +9,13 @@ function saveFile(file, user) {
     const status = {
       name: file.originalname,
       saved: false,
+      exif: false,
       messages: []
     };
 
     new ExifImage({image: `./uploads/${file.filename}`}, function (error, exifData) {
       if (error) status.messages.push(error);
+      else status.exif = true;
 
       //create new Upload object
       const upload = new Upload({
@@ -46,7 +48,7 @@ function saveAllFilesForUser(files, userId) {
 
       Promise.all(promises).then(function (values) {
         //reward user, then save
-        Gamification.rewardUserUploads(user, files);
+        Gamification.rewardUserUploads(user, values);
         user.save();
         resolve(values);
       });
@@ -78,11 +80,11 @@ exports.postFileUpload = (req, res) => {
   saveAllFilesForUser(req.files, req.user.id).then(function (resolved, reject) {
     //display upload messages
     resolved.forEach((status) => {
-      if (status.saved && status.messages.length === 0) {
+      if (status.saved && status.exif) {
         req.flash('success', { msg: `Uploaded successfully: ${status.name}` });
       } else if (status.saved && status.messages.length > 0) {
         status.messages.forEach((message) => {
-          req.flash('info', { msg: `${status.name} was uploaded with warning - ${message.toString()}` });
+          req.flash('info', { msg: `${status.name} was uploaded but did not contain any EXIF data - ${message.toString()}` });
         });
       }
       if (!status.saved) {

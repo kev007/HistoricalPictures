@@ -124,6 +124,16 @@ exports.postSignup = (req, res, next) => {
 };
 
 /**
+ * GET /account/stats
+ * Profile page.
+ */
+exports.getStats = (req, res) => {
+  res.render('account/stats', {
+    title: 'User Statistics'
+  });
+};
+
+/**
  * GET /account
  * Profile page.
  */
