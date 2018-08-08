@@ -1,6 +1,30 @@
+const ExifImage = require('exif').ExifImage;
 const Upload = require('../models/Upload');
 const User = require('../models/User');
 const Gamification = require('./applicationLogic/gamification.js');
+
+function saveFilesForUser(files, userId) {
+  User.findById(userId, (err, user) => {
+    if (err) { return err; }
+
+    files.forEach((file) => {
+      const upload = new Upload({
+        filename: file.filename,
+        user: user._id,
+        file,
+        exif: ExifImage({ image: `./uploads/${file.filename}` }, (error, exifData) => exifData.exifData)
+      });
+
+      upload.save((err) => {
+        if (err) { return err; }
+      });
+    });
+
+    Gamification.rewardUserUploads(user, files);
+    user.save();
+  });
+}
+
 
 /**
  * GET /picture/upload
@@ -24,28 +48,6 @@ exports.postFileUpload = (req, res) => {
 
   saveFilesForUser(req.files, req.user.id);
 
-  req.flash('success', { msg: req.files.length + ' files uploaded successfully.' });
+  req.flash('success', { msg: `${req.files.length} files uploaded successfully.` });
   res.redirect('/picture/upload');
 };
-
-
-function saveFilesForUser(files, userId) {
-  User.findById(userId, (err, user) => {
-    if (err) { return err; }
-
-    files.forEach(function(file) {
-      const upload = new Upload({
-        filename: file.filename,
-        user: user._id,
-        file: file
-      });
-
-      upload.save((err) => {
-        if (err) { return err; }
-      });
-    });
-
-    Gamification.rewardUserUploads(user, files);
-    user.save();
-  });
-}

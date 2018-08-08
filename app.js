@@ -24,11 +24,11 @@ const multer = require('multer');
 const multerOptions = {
   storage: multer.diskStorage({
     destination: path.join(__dirname, 'uploads'),
-    filename: function (req, file, cb) {
-      cb(null, crypto.randomBytes(24).toString('hex') + path.extname(file.originalname))
+    filename(req, file, cb) {
+      cb(null, crypto.randomBytes(24).toString('hex') + path.extname(file.originalname));
     }
   }),
-  preservePath: true //TODO: check if this does anything
+  preservePath: true // TODO: check if this does anything
 };
 const upload = multer(multerOptions);
 

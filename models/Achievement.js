@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const achievementSchema = new mongoose.Schema({
   name: { type: String, unique: true },
-  description: string,
+  description: String,
 }, { timestamps: true });
 
 
