@@ -23,15 +23,18 @@ const userSchema = new mongoose.Schema({
   },
 
   gamification: {
-    adminPrivileges: Boolean,
-    exp: Number,
-    uploadCount: Number,
-    reviewCount: Number,
-    commentCount: Number,
-    strikes: Number,
-    achievements: {type: mongoose.Schema.Types.ObjectId, ref: 'Achievements'},
+    adminPrivileges: { type: Boolean, default: false },
+    exp: { type: Number, default: 0 },
+    uploadCount: { type: Number, default: 0 },
+    reviewCount: { type: Number, default: 0 },
+    commentCount: { type: Number, default: 0 },
+    strikes: { type: Number, default: 0 },
+    achievements: [{type: mongoose.Schema.Types.ObjectId, ref: 'Achievements'}],
   }
-}, { timestamps: true });
+}, {
+  timestamps: true,
+  versionKey: true
+});
 
 /**
  * Password hash middleware.
