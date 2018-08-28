@@ -1,6 +1,6 @@
-const colors = require('colors');
+const chalk = require('chalk');
 
 exports.log = (message) => {
   let currentDate = '[' + new Date().toUTCString() + '] ';
-  console.log(colors.blue(currentDate) + message);
+  console.log(chalk.blue(currentDate) + message);
 };

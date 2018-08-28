@@ -1,5 +1,5 @@
 const helper = require('./helper.js');
-const colors = require('colors');
+const chalk = require('chalk');
 
 const Licence = require('../../models/Picture_Licence');
 
@@ -8,7 +8,7 @@ exports.importLicencesFromJSON = (req, res) => {
   let array = JSON.parse(fs.readFileSync(process.env.LICENCE_FILE, 'utf8'));
 
   if (array.length > 0) {
-    helper.log(colors.red("WIPING COLLECTION: ") + colors.green("Licence") + " with " + Licence.count.length + " entries");
+    helper.log(chalk.red("WIPING COLLECTION: ") + chalk.green("Licence") + " with " + Licence.count.length + " entries");
     Licence.collection.drop();
   }
 
