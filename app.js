@@ -45,6 +45,7 @@ const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
 const pictureController = require('./controllers/picture');
 const contactController = require('./controllers/contact');
+const picture_tagController = require('./controllers/picture_tag');
 
 /**
  * API keys and Passport configuration.
@@ -153,6 +154,7 @@ app.post('/account/password', passportConfig.isAuthenticated, userController.pos
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 
+
 /**
  * API examples routes.
  */
@@ -167,9 +169,13 @@ app.get('/api/lob', apiController.getLob);
 app.get('/api/pinterest', passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.getPinterest);
 app.post('/api/pinterest', passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.postPinterest);
 app.get('/api/google-maps', apiController.getGoogleMaps);
+//app.get('/api/openseadragon', )
 
 app.get('/picture/upload', pictureController.getFileUpload);
 app.post('/picture/upload', upload.array('myFile'), pictureController.postFileUpload);
+
+app.get('/tags', picture_tagController.getAllTags);
+app.post('/tags', picture_tagController.postNewTag);
 
 /**
  * OAuth authentication routes. (Sign in)

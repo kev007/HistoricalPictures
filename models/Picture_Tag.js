@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const tagSchema = new mongoose.Schema({
   name: { type: String, unique: true },
-  altNames: [String]
+  altNames: [String],
+  pictures: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Picture' }]
 });
 
 
