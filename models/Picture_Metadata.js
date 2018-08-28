@@ -1,7 +1,7 @@
 // Reference: https://schema.org/GeoCoordinates
 const mongoose = require('mongoose');
 
-const metaSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   id: { type: Number, unique: true },
 
   deleted: { type: Boolean, default: false },
@@ -11,26 +11,16 @@ const metaSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   },
 
-  file: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Upload' }],
+  picture: { type: mongoose.Schema.Types.ObjectId, ref: 'Picture' },
 
-  name: String,
   geo: {
     latitude: Number,
     longitude: Number,
     elevation: Number,
-    address: String,
-    address_additional: String,
-    postalCode: Number,
-    addressCountry: String
   },
   time: {
     captured: { type: Date },
     capturedAlt: { type: Date },
-    built: { type: Date },
-    builtAlt: { type: Date },
-    unbuilt: { type: Date },
-    unbuiltAlt: { type: Date },
-    unbuilt_type: { type: mongoose.Schema.Types.ObjectId, ref: 'Tag' },
   },
   angles: {
     yaw: Number,
@@ -39,16 +29,17 @@ const metaSchema = new mongoose.Schema({
   },
   rating: [{
     type: { type: mongoose.Schema.Types.ObjectId, ref: 'Rating' },
-    value: Schema.Types.Mixed
+    value: Number
   }],
   caption: String,
   tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tag' }],
+  buildings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Building' }],
 }, {
   timestamps: true,
   versionKey: true
 });
 
 
-const Picture_Metadata = mongoose.model('Meta', metaSchema);
+const Picture_Metadata = mongoose.model('Meta', userSchema);
 
 module.exports = Picture_Metadata;

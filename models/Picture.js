@@ -15,7 +15,7 @@ const pictureSchema = new mongoose.Schema({
     path: String,
     size: Number
   },
-  exif: Object
+  exif: Object,
 }, { timestamps: true });
 
 
