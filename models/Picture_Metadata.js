@@ -33,10 +33,7 @@ const userSchema = new mongoose.Schema({
   caption: String,
   tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tag' }],
   buildings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Building' }],
-}, {
-  timestamps: true,
-  versionKey: true
-});
+}, { timestamps: true });
 
 
 const Picture_Metadata = mongoose.model('Meta', userSchema);

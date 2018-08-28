@@ -33,10 +33,7 @@ const buildingSchema = new mongoose.Schema({
     unbuiltAlt: { type: Date },
     unbuilt_type: { type: mongoose.Schema.Types.ObjectId, ref: 'Tag' },
   }
-}, {
-  timestamps: true,
-  versionKey: true
-});
+}, { timestamps: true });
 
 
 const Building_Tag = mongoose.model('Building', buildingSchema);

@@ -31,10 +31,7 @@ const userSchema = new mongoose.Schema({
     strikes: { type: Number, default: 0 },
     achievements: [{type: mongoose.Schema.Types.ObjectId, ref: 'Achievements'}],
   }
-}, {
-  timestamps: true,
-  versionKey: true
-});
+}, { timestamps: true });
 
 /**
  * Password hash middleware.

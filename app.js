@@ -43,7 +43,7 @@ dotenv.load({ path: '.env.example' });
 const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
-const uploadController = require('./controllers/upload');
+const pictureController = require('./controllers/picture');
 const contactController = require('./controllers/contact');
 
 /**
@@ -168,8 +168,8 @@ app.get('/api/pinterest', passportConfig.isAuthenticated, passportConfig.isAutho
 app.post('/api/pinterest', passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.postPinterest);
 app.get('/api/google-maps', apiController.getGoogleMaps);
 
-app.get('/picture/upload', uploadController.getFileUpload);
-app.post('/picture/upload', upload.array('myFile'), uploadController.postFileUpload);
+app.get('/picture/upload', pictureController.getFileUpload);
+app.post('/picture/upload', upload.array('myFile'), pictureController.postFileUpload);
 
 /**
  * OAuth authentication routes. (Sign in)

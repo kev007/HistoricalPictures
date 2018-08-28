@@ -18,7 +18,7 @@ function saveFile(file, user) {
       else status.exif = true;
 
       //create new Picture object
-      const upload = new Picture({
+      const picture = new Picture({
         filename: file.filename,
         user: user._id,
         file,
@@ -26,7 +26,7 @@ function saveFile(file, user) {
       });
 
       //save created object
-      upload.save((error) => {
+      picture.save((error) => {
         if (error) status.messages.push(error);
         else status.saved = true;
         resolve(status)
