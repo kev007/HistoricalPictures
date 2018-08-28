@@ -11,6 +11,6 @@ const ratingSchema = new mongoose.Schema({
 });
 
 
-const Upload_Rating = mongoose.model('Rating', ratingSchema);
+const Picture_Rating = mongoose.model('Rating', ratingSchema);
 
-module.exports = Upload_Rating;
+module.exports = Picture_Rating;

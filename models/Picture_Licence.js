@@ -6,6 +6,6 @@ const licenceSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 
-const Upload_Licence = mongoose.model('Licence', licenceSchema);
+const Picture_Licence = mongoose.model('Licence', licenceSchema);
 
-module.exports = Upload_Licence;
+module.exports = Picture_Licence;

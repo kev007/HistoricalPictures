@@ -49,6 +49,6 @@ const metaSchema = new mongoose.Schema({
 });
 
 
-const Upload_Metadata = mongoose.model('Meta', metaSchema);
+const Picture_Metadata = mongoose.model('Meta', metaSchema);
 
-module.exports = Upload_Metadata;
+module.exports = Picture_Metadata;

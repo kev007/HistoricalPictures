@@ -6,6 +6,6 @@ const tagSchema = new mongoose.Schema({
 });
 
 
-const Upload_Tag = mongoose.model('Tag', tagSchema);
+const Picture_Tag = mongoose.model('Tag', tagSchema);
 
-module.exports = Upload_Tag;
+module.exports = Picture_Tag;

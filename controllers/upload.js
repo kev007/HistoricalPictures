@@ -1,5 +1,5 @@
 const ExifImage = require('exif').ExifImage;
-const Upload = require('../models/Upload');
+const Upload = require('../models/Picture');
 const User = require('../models/User');
 const Gamification = require('./applicationLogic/gamification.js');
 
