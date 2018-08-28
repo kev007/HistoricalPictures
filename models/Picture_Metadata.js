@@ -4,15 +4,14 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
   id: { type: Number, unique: true },
 
+  picture: { type: mongoose.Schema.Types.ObjectId, ref: 'Picture' },
+  
   deleted: { type: Boolean, default: false },
   readonly: { type: Boolean, default: false },
   version: {
     number: Number,
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   },
-
-  picture: { type: mongoose.Schema.Types.ObjectId, ref: 'Picture' },
-
   geo: {
     latitude: Number,
     longitude: Number,

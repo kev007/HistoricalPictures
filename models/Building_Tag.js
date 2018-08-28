@@ -4,6 +4,9 @@ const mongoose = require('mongoose');
 const buildingSchema = new mongoose.Schema({
   id: { type: Number, unique: true },
 
+  name: String,
+  altNames: [String],
+
   deleted: { type: Boolean, default: false },
   readonly: { type: Boolean, default: false },
   version: {
@@ -14,7 +17,6 @@ const buildingSchema = new mongoose.Schema({
   // all the pictures that contain this tag
   pictures: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Picture' }],
 
-  name: { type: mongoose.Schema.Types.ObjectId, ref: 'Name' },
   geo: {
     latitude: Number,
     longitude: Number,
