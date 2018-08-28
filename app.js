@@ -31,6 +31,7 @@ const multerOptions = {
   preservePath: true // TODO: check if this does anything
 };
 const upload = multer(multerOptions);
+const helper = require('./controllers/applicationLogic/helper.js');
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
@@ -44,6 +45,7 @@ const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
 const pictureController = require('./controllers/picture');
+const licenceController = require('./controllers/applicationLogic/picture_licence');
 const contactController = require('./controllers/contact');
 
 /**
@@ -214,6 +216,15 @@ if (process.env.NODE_ENV === 'development') {
   // only use in development
   app.use(errorHandler());
 }
+
+/**
+ * Database initialization
+ */
+helper.log('-------- STARTUP -------');
+licenceController.importLicencesFromJSON();
+helper.log('----- STARTUP DONE -----');
+
+
 
 /**
  * Start Express server.
