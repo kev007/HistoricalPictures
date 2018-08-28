@@ -220,9 +220,9 @@ if (process.env.NODE_ENV === 'development') {
 /**
  * Database initialization
  */
-helper.log('-------- STARTUP -------');
+helper.log('----------------- STARTUP ----------------');
 licenceController.importLicencesFromJSON();
-helper.log('----- STARTUP DONE -----');
+helper.log('-------------- STARTUP DONE --------------');
 
 
 
