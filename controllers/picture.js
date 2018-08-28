@@ -1,5 +1,5 @@
 const ExifImage = require('exif').ExifImage;
-const Upload = require('../models/Picture');
+const Picture = require('../models/Picture');
 const User = require('../models/User');
 const Gamification = require('./applicationLogic/gamification.js');
 
@@ -17,8 +17,8 @@ function saveFile(file, user) {
       if (error) status.messages.push(error);
       else status.exif = true;
 
-      //create new Upload object
-      const upload = new Upload({
+      //create new Picture object
+      const upload = new Picture({
         filename: file.filename,
         user: user._id,
         file,
@@ -59,10 +59,10 @@ function saveAllFilesForUser(files, userId) {
 
   /**
  * GET /picture/upload
- * File Upload API example.
+ * File Picture API example.
  */
 exports.getFileUpload = (req, res) => {
-  res.render('api/upload', {
+  res.render('upload', {
     title: 'File Upload'
   });
 };
