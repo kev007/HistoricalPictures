@@ -83,25 +83,38 @@ exports.postFileUpload = (req, res) => {
     req.flash('errors', { msg: 'Nothing to upload' });
     return res.redirect('/picture/upload');
   }
+  if (req.files.length === 0) {
+    req.flash('errors', { msg: 'Nothing to upload' });
+    return res.redirect('/picture/upload');
+  }
 
   saveAllFilesForUser(req.files, req.user.id, req.body).then(function (resolved, reject) {
+    let saved = 0;
     //display upload messages
     resolved.forEach((status) => {
-      if (status.saved && status.exif) {
-        req.flash('success', { msg: `Uploaded successfully: ${status.name}` });
-      } else if (status.saved && status.messages.length > 0) {
-        status.messages.forEach((message) => {
-          req.flash('info', { msg: `${status.name} was uploaded but did not contain any EXIF data - ${message.toString()}` });
-        });
-      }
-      if (!status.saved) {
-        req.flash('errors', { msg: `${status.name} uploaded with errors.` });
+      if (status.saved) {
+        saved++; //count the number of uploads saved to the database
+        if (status.exif) {
+          req.flash('success', { msg: `Uploaded successfully: ${status.name}` });
+        }
+        if (status.messages.length > 0) {
+          status.messages.forEach((message) => {
+            req.flash('info', {msg: `${status.name} was uploaded but did not contain any EXIF data - ${message.toString()}`});
+          });
+        }
+      } else {
+        req.flash('errors', { msg: `${status.name} uploaded with errors and could not be saved.` });
         status.messages.forEach((message) => {
           req.flash('errors', { msg: `${message.toString()}` });
         });
         //TODO: check if it's in the filesystem, then delete?
       }
     });
-    res.redirect('/picture/upload');
+
+    if (saved > 0) {
+      res.redirect('/picture/form');
+    } else {
+      res.redirect('/picture/upload');
+    }
   });
 };

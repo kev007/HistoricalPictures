@@ -47,7 +47,7 @@ const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
 const pictureController = require('./controllers/picture');
-const licenceController = require('./controllers/applicationLogic/picture_licence');
+const formController = require('./controllers/form');
 const contactController = require('./controllers/contact');
 const picture_tagController = require('./controllers/picture_tag');
 
@@ -134,6 +134,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads'), { maxAge: 31
 app.use('/public', express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
 app.use('/js/lib', express.static(path.join(__dirname, 'node_modules/popper.js/dist'), { maxAge: 31557600000 }));
 app.use('/js/lib', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js'), { maxAge: 31557600000 }));
+app.use('/js/lib', express.static(path.join(__dirname, 'node_modules/bootstrap-tagsinput/dist'), { maxAge: 31557600000 }));
 app.use('/js/lib', express.static(path.join(__dirname, 'node_modules/jquery/dist'), { maxAge: 31557600000 }));
 
 /**
@@ -177,7 +178,8 @@ app.get('/api/google-maps', apiController.getGoogleMaps);
 
 app.get('/picture/upload', passportConfig.isAuthenticated, pictureController.getFileUpload);
 app.post('/picture/upload', upload.array('myFile'), pictureController.postFileUpload);
-
+app.get('/picture/form', passportConfig.isAuthenticated, formController.getForm);
+app.post('/picture/form', formController.postForm);
 app.get('/tags', picture_tagController.getAllTags);
 app.post('/tags', picture_tagController.postNewTag);
 
@@ -231,7 +233,9 @@ if (process.env.NODE_ENV === 'development') {
 helper.log('---------------- DB STARTUP ----------------');
 if (process.env.NODE_ENV === 'development') {
   // only use in development
-  licenceController.importLicencesFromJSON();
+  const importJSON = require('./controllers/applicationLogic/importJSON');
+  importJSON.importLicencesFromJSON();
+  importJSON.importTagsFromJSON();
 }
 helper.log('--------------- STARTUP DONE ---------------');
 

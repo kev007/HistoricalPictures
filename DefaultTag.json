@@ -1,12 +1,12 @@
 [
   {
     "name" : "Gebäude",
-	"" : ["gebäude", "building"],
-	"pictures" : []
+    "altNames" : ["gebäude", "building"],
+    "pictures" : []
   },
   {
     "name" : "Brücke",
-	"altNames" : ["brücke" , "bridge"],
-	"pictures" : []
+    "altNames" : ["brücke" , "bridge"],
+    "pictures" : []
   }
 ]

@@ -2,6 +2,7 @@ const helper = require('./helper.js');
 const chalk = require('chalk');
 
 const Licence = require('../../models/Picture_Licence');
+const Tag = require('../../models/Picture_Tag');
 
 exports.importLicencesFromJSON = (req, res) => {
   let fs = require('fs');
@@ -24,6 +25,31 @@ exports.importLicencesFromJSON = (req, res) => {
     //save created object
     licence.save((error) => {
       if (error) helper.log("importLicencesFromJSON: " + error);
+    });
+  });
+};
+
+exports.importTagsFromJSON = (req, res) => {
+  let fs = require('fs');
+  let array = JSON.parse(fs.readFileSync(process.env.TAGS_FILE, 'utf8'));
+
+  if (array.length > 0) {
+    helper.log(chalk.red("WIPING COLLECTION: ") + chalk.green("Tag") + " with " + Tag.count.length + " entries");
+    Tag.collection.drop();
+  }
+
+  helper.log("Importing " + array.length + " entries from " + process.env.TAGS_FILE);
+
+  array.forEach((json) => {
+    const tag = new Tag({
+      name: json.name,
+      altNames: json.altNames,
+      // pictures: json.pictures,
+      //TODO: resolve picture ids?
+    });
+    //save created object
+    tag.save((error) => {
+      if (error) helper.log("importTagsFromJSON: " + error);
     });
   });
 };
