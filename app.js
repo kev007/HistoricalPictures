@@ -131,10 +131,10 @@ app.use((req, res, next) => {
 });
 app.use('/', express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'), { maxAge: 31557600000 }));
+app.use('/public', express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
 app.use('/js/lib', express.static(path.join(__dirname, 'node_modules/popper.js/dist'), { maxAge: 31557600000 }));
 app.use('/js/lib', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js'), { maxAge: 31557600000 }));
-app.use('/js/lib', express.static(path.join(__dirname, 'node_modules/bootstrap4-tagsinput'), { maxAge: 31557600000 }));
-app.use('/js/lib', express.static(path.join(__dirname, 'node_modules/bootstrap-3-typeahead'), { maxAge: 31557600000 }));
+app.use('/js/lib', express.static(path.join(__dirname, 'node_modules/bootstrap-tagsinput/dist'), { maxAge: 31557600000 }));
 app.use('/js/lib', express.static(path.join(__dirname, 'node_modules/jquery/dist'), { maxAge: 31557600000 }));
 
 /**
@@ -179,10 +179,10 @@ app.get('/api/openstreetmap')
 
 app.get('/picture/upload', passportConfig.isAuthenticated, pictureController.getFileUpload);
 app.post('/picture/upload', upload.array('myFile'), pictureController.postFileUpload);
-app.get('/form', passportConfig.isAuthenticated, formController.getForm);
-app.post('/form', formController.postForm);
-app.get('/tags', picture_tagController.getAllTags);
-app.post('/tags', picture_tagController.postNewTag);
+app.get('/picture/form', passportConfig.isAuthenticated, formController.getForm);
+app.post('/picture/form', formController.postForm);
+app.get('/picturetags', picture_tagController.getAllTags);
+app.post('/picturetags', picture_tagController.postNewTag);
 
 /**
  * OAuth authentication routes. (Sign in)
@@ -235,7 +235,6 @@ helper.log('---------------- DB STARTUP ----------------');
 if (process.env.NODE_ENV === 'development') {
   // only use in development
   const importJSON = require('./controllers/applicationLogic/importJSON');
-  importJSON.wipeCollection();
   importJSON.importLicencesFromJSON();
   importJSON.importTagsFromJSON();
 }
