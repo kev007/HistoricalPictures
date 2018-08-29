@@ -181,8 +181,8 @@ app.get('/picture/upload', passportConfig.isAuthenticated, pictureController.get
 app.post('/picture/upload', upload.array('myFile'), pictureController.postFileUpload);
 app.get('/form', passportConfig.isAuthenticated, formController.getForm);
 app.post('/form', formController.postForm);
-app.get('/tags', picture_tagController.getAllTags);
-app.post('/tags', picture_tagController.postNewTag);
+app.get('/picturetags', picture_tagController.getAllTags);
+app.post('/picturetags', picture_tagController.postNewTag);
 
 /**
  * OAuth authentication routes. (Sign in)

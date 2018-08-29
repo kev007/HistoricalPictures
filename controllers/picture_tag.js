@@ -10,7 +10,7 @@ exports.postNewTag = (req, res, next) => {
   });
 
   Object.entries(req.body).forEach((element) => {
-    if (element[0].search('alternativetag') !== -1) {
+    if (element[0].search('addOptionalTag') !== -1) {
       pictureTag.altNames.push(element[1]);
     }
   });
@@ -18,16 +18,16 @@ exports.postNewTag = (req, res, next) => {
   //save created object
   pictureTag.save((error) => {
     if (error) {
-      req.flash('errors', { msg: `Errors: Tag not saved.` });
+      req.flash('errors', { msg: $(error) + `Errors: Tag not saved.` });
     }
-    res.redirect('/tags')
+    res.redirect('/picturetags')
   });
 
 
 }
 
 exports.getAllTags = (req, res) => {
-    res.render('tags', {
+    res.render('picturetags', {
         title: 'All Tags'
     });
 
