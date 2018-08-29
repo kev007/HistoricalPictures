@@ -17,6 +17,7 @@ exports.importLicencesFromJSON = (req, res) => {
   array.forEach((json) => {
     const licence = new Licence({
       name: json.name,
+      short: json.short,
       description: json.description,
       url: json.url
     });

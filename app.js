@@ -1,3 +1,6 @@
+const helper = require('./controllers/applicationLogic/helper.js');
+helper.log('------------------- INIT -------------------');
+
 /**
  * Module dependencies.
  */
@@ -31,7 +34,6 @@ const multerOptions = {
   preservePath: true // TODO: check if this does anything
 };
 const upload = multer(multerOptions);
-const helper = require('./controllers/applicationLogic/helper.js');
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
@@ -173,7 +175,7 @@ app.post('/api/pinterest', passportConfig.isAuthenticated, passportConfig.isAuth
 app.get('/api/google-maps', apiController.getGoogleMaps);
 //app.get('/api/openseadragon', )
 
-app.get('/picture/upload', pictureController.getFileUpload);
+app.get('/picture/upload', passportConfig.isAuthenticated, pictureController.getFileUpload);
 app.post('/picture/upload', upload.array('myFile'), pictureController.postFileUpload);
 
 app.get('/tags', picture_tagController.getAllTags);
@@ -226,9 +228,12 @@ if (process.env.NODE_ENV === 'development') {
 /**
  * Database initialization
  */
-helper.log('----------------- STARTUP -----------------');
-licenceController.importLicencesFromJSON();
-helper.log('--------------- STARTUP DONE --------------');
+helper.log('---------------- DB STARTUP ----------------');
+if (process.env.NODE_ENV === 'development') {
+  // only use in development
+  licenceController.importLicencesFromJSON();
+}
+helper.log('--------------- STARTUP DONE ---------------');
 
 
 

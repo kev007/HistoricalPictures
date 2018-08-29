@@ -1,10 +1,11 @@
 const ExifImage = require('exif').ExifImage;
 const Picture = require('../models/Picture');
 const User = require('../models/User');
+const Licence = require('../models/Picture_Licence');
 const Gamification = require('./applicationLogic/gamification.js');
 
 
-function saveFile(file, user) {
+function saveFile(file, user, body) {
   return new Promise((resolve, reject) => {
     const status = {
       name: file.originalname,
@@ -21,6 +22,8 @@ function saveFile(file, user) {
       const picture = new Picture({
         filename: file.filename,
         user: user._id,
+        licence: body.licence,
+        licenceHolder: body.licenceHolder,
         file,
         exif: exifData
       });
@@ -35,7 +38,7 @@ function saveFile(file, user) {
   });
 }
 
-function saveAllFilesForUser(files, userId) {
+function saveAllFilesForUser(files, userId, body) {
   return new Promise((resolve, reject) => {
     const promises = [];
 
@@ -43,7 +46,7 @@ function saveAllFilesForUser(files, userId) {
       if (error) reject(error);
 
       files.forEach((file) => {
-        promises.push(saveFile(file, user));
+        promises.push(saveFile(file, user, body));
       });
 
       Promise.all(promises).then(function (values) {
@@ -62,8 +65,12 @@ function saveAllFilesForUser(files, userId) {
  * File Picture API example.
  */
 exports.getFileUpload = (req, res) => {
-  res.render('upload', {
-    title: 'File Upload'
+  Licence.find({}, (error, licences) => {
+    if (error) console.log(error);
+    res.render('upload', {
+      title: 'File Upload',
+      licences: licences
+    });
   });
 };
 
@@ -77,7 +84,7 @@ exports.postFileUpload = (req, res) => {
     return res.redirect('/picture/upload');
   }
 
-  saveAllFilesForUser(req.files, req.user.id).then(function (resolved, reject) {
+  saveAllFilesForUser(req.files, req.user.id, req.body).then(function (resolved, reject) {
     //display upload messages
     resolved.forEach((status) => {
       if (status.saved && status.exif) {
@@ -89,6 +96,9 @@ exports.postFileUpload = (req, res) => {
       }
       if (!status.saved) {
         req.flash('errors', { msg: `${status.name} uploaded with errors.` });
+        status.messages.forEach((message) => {
+          req.flash('errors', { msg: `${message.toString()}` });
+        });
         //TODO: check if it's in the filesystem, then delete?
       }
     });
