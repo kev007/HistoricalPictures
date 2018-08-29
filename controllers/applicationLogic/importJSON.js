@@ -3,6 +3,7 @@ const chalk = require('chalk');
 
 const Licence = require('../../models/Picture_Licence');
 const Tag = require('../../models/Picture_Tag');
+const Picture = require('../../models/Picture');
 
 exports.wipeCollection = (req, res) => {
   helper.log(chalk.red("WIPING COLLECTION: ") + chalk.green("Licence") + " with " + Licence.count.length + " entries");
@@ -10,7 +11,10 @@ exports.wipeCollection = (req, res) => {
 
   helper.log(chalk.red("WIPING COLLECTION: ") + chalk.green("Tag") + " with " + Tag.count.length + " entries");
   Tag.collection.drop();
-}
+
+  helper.log(chalk.red("WIPING COLLECTION: ") + chalk.green("Picture") + " with " + Picture.count.length + " entries");
+  Picture.collection.drop();
+};
 
 exports.importLicencesFromJSON = (req, res) => {
   let fs = require('fs');
