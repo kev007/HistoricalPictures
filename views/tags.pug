@@ -1,7 +1,18 @@
 extends layout
+
 block content
+  script(src="/scripts/optioanlTag.js")
+
   form(role='form', method='POST')
-    input.form-control(type='text', name='TagName', id='tagName', placeholder='', autofocus, required)
     input(type='hidden', name='_csrf', value=_csrf)
-    button.btn.btn-primary(type='submit') B1
-    button.btn.btn-primary(type='submit') B2
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-left(for='tagname') New Tagname
+      input.row-md-3.form-control(type='text', name='tagname', id='tagname', placeholder='tagname', autofocus, required)
+      .col-md-7
+    .form-group.row(id="alternative_tag")
+      label.col-md-3.col-form-label.font-weight-bold.text-left(for='addAlternative') add alternative Tagname
+      button.row-md-3.btn.btn-primary(type='button', name='addAlternative', id='addAlternative', onclick='addOptional()') +
+
+
+
+    button.btn.btn-primary(type='submit') Add

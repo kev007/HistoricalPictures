@@ -205,3 +205,11 @@ exports.getGoogleMaps = (req, res) => {
     google_map_api_key: process.env.GOOGLE_MAP_API_KEY
   });
 };
+
+exports.getOpenstreetMaps = ((req, res) => {
+  res.render('api/openstreet-maps', {
+    title: 'OpenStreet Maps API'
+  })
+});
+
+

@@ -174,6 +174,7 @@ app.get('/api/lob', apiController.getLob);
 app.get('/api/pinterest', passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.getPinterest);
 app.post('/api/pinterest', passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.postPinterest);
 app.get('/api/google-maps', apiController.getGoogleMaps);
+app.get('/api/openstreetmap')
 //app.get('/api/openseadragon', )
 
 app.get('/picture/upload', passportConfig.isAuthenticated, pictureController.getFileUpload);
