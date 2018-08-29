@@ -1,0 +1,12 @@
+[
+  {
+    "name" : "Gebäude",
+	"" : ["gebäude", "building"],
+	"pictures" : []
+  },
+  {
+    "name" : "Brücke",
+	"altNames" : ["brücke" , "bridge"],
+	"pictures" : []
+  }
+]
