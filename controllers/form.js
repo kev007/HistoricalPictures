@@ -1,10 +1,16 @@
+const Tag = require('../models/Picture_Tag');
+
 /**
- * GET /picture/form
+ * GET /form
  * Form.
  */
 exports.getForm = (req, res) => {
-  res.render('form', {
-    title: 'File Upload',
+  Tag.find({}, (error, tags) => {
+    if (error) console.log(error);
+    res.render('form', {
+      title: 'Form',
+      tags: JSON.stringify(tags)
+    });
   });
 };
 
@@ -12,8 +18,8 @@ exports.getForm = (req, res) => {
 exports.postForm = (req, res) => {
   if (!req.isAuthenticated()) {
     req.flash('errors', { msg: 'You must be logged in to perform this action' });
-    return res.redirect('/picture/form');
+    return res.redirect('/form');
   }
-  res.redirect('/picture/form');
+  res.redirect('/form');
 };
 

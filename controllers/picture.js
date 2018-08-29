@@ -112,7 +112,7 @@ exports.postFileUpload = (req, res) => {
     });
 
     if (saved > 0) {
-      res.redirect('/picture/form');
+      res.redirect('/form');
     } else {
       res.redirect('/picture/upload');
     }

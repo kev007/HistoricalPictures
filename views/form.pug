@@ -1,8 +1,26 @@
 extends layout
-block content
-  form(role='form', method='POST')
-  .form-group.row.has-feedback
-    label.col-md-3.col-form-label.font-weight-bold.text-right Search Test
-    .col-md-7
-      input(class="form-control", type="text", name="tags", data-role="tagsInput", placeholder="Type in a tag and press enter...")
 
+block content
+  script.
+    console.log("hello")
+    let data = !{tags}
+    document.addEventListener('DOMContentLoaded', function () {
+      $('.typeahead').tagsinput({
+        typeahead: {
+          source: data.map(function (item) {
+            return item.name
+          }),
+          afterSelect: function () {
+            this.$element[0].value = '';
+          }
+        }
+      })
+    }, false);
+
+
+  form(role='form', class="navbar-form navbar-left", method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group.row.has-feedback
+      label.col-md-3.col-form-label.font-weight-bold.text-right Search Test
+      .col-md-7
+        input.typeahead(type="text", name="tags", data-role="tagsinput", placeholder="Type in a tag and press enter...")
