@@ -1,8 +1,10 @@
 const tag = require('../models/Picture_Tag')
 
 exports.postNewTag = (req, res, next) => {
-    console.log('Hallo World');
-    res.redirect('/tags')
+  var msg =   res.querySelector("#vorname").value;
+
+  console.log(msg);
+  res.redirect('/tags')
 
 }
 
