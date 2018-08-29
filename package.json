@@ -53,7 +53,7 @@
     "passport-twitter": "^1.0.4",
     "popper.js": "^1.14.4",
     "pug": "^2.0.3",
-    "request": "^2.87.0",
+    "request": "^2.88.0",
     "tumblr.js": "^2.0.0",
     "twit": "^2.2.11",
     "validator": "^10.5.0"
