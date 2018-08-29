@@ -1,12 +1,14 @@
 [
   {
     "name" : "Creative Commons Namensnennung-Weitergabe unter gleichen Bedingungen in Version 4.0",
-    "description" : "abgekürzt: CC-by-sa 3.0",
+	"short" : "CC BY-SA 4.0",
+    "description" : "abgekürzt: CC BY-SA 4.0",
     "url" : "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
   },
   {
     "name" : "Creative Commons Namensnennung-Weitergabe unter gleichen Bedingungen in Version 3.0",
-    "description" : "abgekürzt: CC-by-sa 3.0/de",
+	"short" : "CC BY-SA 3.0",
+    "description" : "abgekürzt: CC BY-SA 3.0",
     "url" : "https://creativecommons.org/licenses/by-sa/3.0/deed.de"
   }
 ]
