@@ -23,6 +23,7 @@ const expressStatusMonitor = require('express-status-monitor');
 const sass = require('node-sass-middleware');
 const crypto = require('crypto');
 const multer = require('multer');
+const osm = require('osm');
 
 const multerOptions = {
   storage: multer.diskStorage({
@@ -50,6 +51,9 @@ const pictureController = require('./controllers/picture');
 const formController = require('./controllers/form');
 const contactController = require('./controllers/contact');
 const picture_tagController = require('./controllers/picture_tag');
+const picture_overviewController = require('./controllers/picture/picture_overview');
+const picture_viewController = require('./controllers/picture/picture_view');
+const openstreetmap = require('./controllers/openstreetmap/openstreetmap');
 
 /**
  * API keys and Passport configuration.
@@ -174,8 +178,20 @@ app.get('/api/lob', apiController.getLob);
 app.get('/api/pinterest', passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.getPinterest);
 app.post('/api/pinterest', passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.postPinterest);
 app.get('/api/google-maps', apiController.getGoogleMaps);
-app.get('/api/openstreetmap')
+app.get('/api/openstreetmap', apiController.getOpenstreetMaps);
 //app.get('/api/openseadragon', )
+
+
+/**
+ * Website routes
+ */
+app.get('/picture/picture_overview', picture_overviewController.getPictureOverView());
+app.get('/picture/picture_view', picture_viewController.getpictureView());
+app.get('/openstreetmap', openstreetmap.getOpenstreetMaps());
+
+
+
+
 
 app.get('/picture/upload', passportConfig.isAuthenticated, pictureController.getFileUpload);
 app.post('/picture/upload', upload.array('myFile'), pictureController.postFileUpload);
@@ -183,6 +199,9 @@ app.get('/form', passportConfig.isAuthenticated, formController.getForm);
 app.post('/form', formController.postForm);
 app.get('/picturetags', picture_tagController.getAllTags);
 app.post('/picturetags', picture_tagController.postNewTag);
+app.get('/pictureoverview');//, picture_overviewController);
+app.get('/pictureview');//, picture_viewController);
+
 
 /**
  * OAuth authentication routes. (Sign in)

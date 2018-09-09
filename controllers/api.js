@@ -206,10 +206,8 @@ exports.getGoogleMaps = (req, res) => {
   });
 };
 
-exports.getOpenstreetMaps = ((req, res) => {
-  res.render('api/openstreet-maps', {
-    title: 'OpenStreet Maps API'
-  })
-});
+exports.getOpenstreetMaps = (req, res) => {
+  res.sendfile("./views/openstreetmap/opensteetmap.html");
+};
 
 
