@@ -1,5 +1,6 @@
 const request = require('request');
+//const tom = require('public/js/osm/tom');
 
 exports.getOpenstreetMaps = (req, res) => {
-  res.sendfile("../views/openstreetmap/opensteetmap.html");
+  res.render('openstreetmap/osm');
 };

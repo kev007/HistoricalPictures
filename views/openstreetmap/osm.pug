@@ -1,10 +1,59 @@
 extends ../layout
 
 block append head
-
-block content
-//  scripts.
-//    var osm = require('osm');
-//    // show a map of the current position
-//    map = osm().position(47.88038, 10.6222475);
-//  map.show()
+    title Map - HIP Leipzig
+    link(rel='stylesheet', type='text/css', href='/css/osm/map.css')
+    //if IE
+      link(rel='stylesheet', type='text/css', href='/css/ie_map.css')
+    script(type='text/javascript', src='http://www.openlayers.org/api/OpenLayers.js')
+    script(type='text/javascript', src='http://www.openstreetmap.org/openlayers/OpenStreetMap.js')
+    script(type='text/javascript', src='/js/osm/tom.js')
+    script(type='text/javascript').
+      //<![CDATA[
+      var map;
+      var layer_mapnik;
+      var layer_tah;
+      var layer_markers;
+      function drawmap() {
+        // Popup und Popuptext mit evtl. Grafik
+        var popuptext="<font color=\\"black\"><b>Uni Leipzig<br>Augustusplatz 10<br>04109 Leipzig</b><p><img src=\"/picture/osm_logo.png\" width=\"180\" height=\"113\"></p></font>";
+        OpenLayers.Lang.setCode('de');
+        // Position und Zoomstufe der Karte
+        var lon = 12.3784805;
+        var lat = 51.3388793;
+        var zoom = 12;
+        map = new OpenLayers.Map('map', {
+          projection: new OpenLayers.Projection("EPSG:900913"),
+          displayProjection: new OpenLayers.Projection("EPSG:4326"),
+          controls: [
+            new OpenLayers.Control.Navigation(),
+            new OpenLayers.Control.LayerSwitcher(),
+            new OpenLayers.Control.PanZoomBar()],
+          maxExtent:
+            new OpenLayers.Bounds(-20037508.34,-20037508.34,
+              20037508.34, 20037508.34),
+          numZoomLevels: 18,
+          maxResolution: 156543,
+          units: 'meters'
+        });
+        layer_mapnik = new OpenLayers.Layer.OSM.Mapnik("Mapnik");
+        layer_markers = new OpenLayers.Layer.Markers("Address", { projection: new OpenLayers.Projection("EPSG:4326"),
+          visibility: true, displayInLayerSwitcher: false });
+        map.addLayers([layer_mapnik, layer_markers]);
+        jumpTo(lon, lat, zoom);
+        // Position des Markers
+        //addMarker(layer_markers, 12.3784805, 51.3388793, popuptext);
+      }
+      //]]>
+block append content
+  body(onload='drawmap();')
+    #header
+      #content Karte (Testversion)
+      #osm
+        | ©
+        a(href='http://www.openstreetmap.org') OpenStreetMap
+        |     und
+        a(href='http://www.openstreetmap.org/copyright') Mitwirkende
+        | ,
+        a(href='http://creativecommons.org/licenses/by-sa/2.0/deed.de') CC-BY-SA
+    #map

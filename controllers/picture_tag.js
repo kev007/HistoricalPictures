@@ -20,14 +20,14 @@ exports.postNewTag = (req, res, next) => {
     if (error) {
       req.flash('errors', { msg: $(error) + `Errors: Tag not saved.` });
     }
-    res.redirect('/picturetags')
+    res.redirect('/tags/picture_tags')
   });
 
 
 }
 
 exports.getAllTags = (req, res) => {
-    res.render('picturetags', {
+    res.render('tags/picture_tags', {
         title: 'All Tags'
     });
 

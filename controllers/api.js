@@ -207,7 +207,8 @@ exports.getGoogleMaps = (req, res) => {
 };
 
 exports.getOpenstreetMaps = (req, res) => {
-  res.sendfile("./views/openstreetmap/opensteetmap.html");
+  res.render('openstreetmap/osm');
+  // res.sendfile("./views/openstreetmap/opensteetmap.html");
 };
 
 

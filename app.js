@@ -53,6 +53,7 @@ const picture_tagController = require('./controllers/picture_tag');
 const picture_overviewController = require('./controllers/picture/picture_overview');
 const picture_viewController = require('./controllers/picture/picture_view');
 const openstreetmap = require('./controllers/openstreetmap/openstreetmap');
+const explainController = require('./controllers/explain/explain');
 
 /**
  * API keys and Passport configuration.
@@ -186,10 +187,13 @@ app.get('/api/openstreetmap', apiController.getOpenstreetMaps);
 /**
  * Website routes
  */
-//app.get('/picture/picture_overview', picture_overviewController.getPictureOverView());
-//app.get('/picture/picture_view', picture_viewController.getPictureView());
-app.get('/openstreetmap', openstreetmap.getOpenstreetMaps());
-
+app.get('/picture/picture_overview', picture_overviewController.getPictureOverView);
+app.get('/picture/picture_view', picture_viewController.getPictureView);
+app.get('/openstreetmap', openstreetmap.getOpenstreetMaps);
+app.get('/explain', explainController.getExplainMain);
+app.get('/explain/tutorial', explainController.getTutorial);
+app.get('/explain/intro', explainController.getIntro);
+app.get('/explain/faq', explainController.getFAQ);
 
 
 
