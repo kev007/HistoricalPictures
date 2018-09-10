@@ -204,8 +204,7 @@ app.get('/form', passportConfig.isAuthenticated, formController.getForm);
 app.post('/form', formController.postForm);
 app.get('/picturetags', picture_tagController.getAllTags);
 app.post('/picturetags', picture_tagController.postNewTag);
-app.get('/pictureoverview');//, picture_overviewController);
-app.get('/pictureview');//, picture_viewController);
+
 
 
 /**
