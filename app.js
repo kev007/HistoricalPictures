@@ -23,7 +23,6 @@ const expressStatusMonitor = require('express-status-monitor');
 const sass = require('node-sass-middleware');
 const crypto = require('crypto');
 const multer = require('multer');
-const osm = require('osm');
 
 const multerOptions = {
   storage: multer.diskStorage({
@@ -141,6 +140,8 @@ app.use('/js/lib', express.static(path.join(__dirname, 'node_modules/bootstrap4-
 app.use('/js/lib', express.static(path.join(__dirname, 'node_modules/bootstrap-3-typeahead'), { maxAge: 31557600000 }));
 app.use('/js/lib', express.static(path.join(__dirname, 'node_modules/jquery/dist'), { maxAge: 31557600000 }));
 
+app.use(express.static(__dirname + '/public'));
+
 /**
  * Primary app routes.
  */
@@ -185,8 +186,8 @@ app.get('/api/openstreetmap', apiController.getOpenstreetMaps);
 /**
  * Website routes
  */
-app.get('/picture/picture_overview', picture_overviewController.getPictureOverView());
-app.get('/picture/picture_view', picture_viewController.getpictureView());
+//app.get('/picture/picture_overview', picture_overviewController.getPictureOverView());
+//app.get('/picture/picture_view', picture_viewController.getPictureView());
 app.get('/openstreetmap', openstreetmap.getOpenstreetMaps());
 
 
