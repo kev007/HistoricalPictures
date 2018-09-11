@@ -71,7 +71,7 @@ const app = express();
  * Connect to MongoDB.
  */
 mongoose.Promise = global.Promise;
-var options = {
+let mongoOptions = {
   useMongoClient: true,
   user: process.env.MONGO_USER,
   pass: process.env.MONGO_PASS,
@@ -80,7 +80,7 @@ var options = {
   }
 }
 mongoose.set('debug', true);
-mongoose.connect(process.env.MONGODB_URI, options);
+mongoose.connect(process.env.MONGODB_URI, mongoOptions);
 mongoose.connection.on('error', (err) => {
   console.error(err);
   console.log('%s MongoDB connection error. Please make sure MongoDB is running.', chalk.red('✗'));
@@ -210,12 +210,12 @@ app.get('/explain/intro', explainController.getIntro);
 app.get('/explain/faq', explainController.getFAQ);
 
 
-let options = {
+let galleryOptions = {
   title: 'My Awesome Photo Gallery'
 };
 const Gallery = require('express-photo-gallery');
 
-app.use('/photos', Gallery('uploads', options));
+app.use('/photos', Gallery('uploads', galleryOptions));
 
 
 
