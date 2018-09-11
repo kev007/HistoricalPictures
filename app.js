@@ -70,7 +70,17 @@ const app = express();
 /**
  * Connect to MongoDB.
  */
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
+mongoose.Promise = global.Promise;
+var options = {
+  useMongoClient: true,
+  user: process.env.MONGO_USER,
+  pass: process.env.MONGO_PASS,
+  auth: {
+    authdb: 'admin'
+  }
+}
+mongoose.set('debug', true);
+mongoose.connect(process.env.MONGODB_URI, options);
 mongoose.connection.on('error', (err) => {
   console.error(err);
   console.log('%s MongoDB connection error. Please make sure MongoDB is running.', chalk.red('✗'));
