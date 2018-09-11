@@ -22,6 +22,7 @@ const expressValidator = require('express-validator');
 const expressStatusMonitor = require('express-status-monitor');
 const sass = require('node-sass-middleware');
 const crypto = require('crypto');
+
 const multer = require('multer');
 
 const multerOptions = {
@@ -34,7 +35,6 @@ const multerOptions = {
   preservePath: true // TODO: check if this does anything
 };
 const upload = multer(multerOptions);
-
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
  */
@@ -46,14 +46,16 @@ dotenv.load({ path: '.env.example' });
 const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
-const pictureController = require('./controllers/picture');
-const formController = require('./controllers/form');
 const contactController = require('./controllers/contact');
-const picture_tagController = require('./controllers/picture_tag');
 const picture_overviewController = require('./controllers/picture/picture_overview');
 const picture_viewController = require('./controllers/picture/picture_view');
+const picture_uploadController = require('./controllers/picture/picture_upload');
 const openstreetmap = require('./controllers/openstreetmap/openstreetmap');
 const explainController = require('./controllers/explain/explain');
+
+//const picture_tagController = require('./controllers/picture_tag');
+//const pictureController = require('./controllers/picture');
+//const formController = require('./controllers/form');
 
 /**
  * API keys and Passport configuration.
@@ -189,6 +191,8 @@ app.get('/api/openstreetmap', apiController.getOpenstreetMaps);
  */
 app.get('/picture/picture_overview', picture_overviewController.getPictureOverView);
 app.get('/picture/picture_view', picture_viewController.getPictureView);
+app.get('/picture/upload', passportConfig.isAuthenticated, picture_uploadController.getFileUpload);
+app.post('/picture/upload', upload.array('myFile'), picture_uploadController.postFileUpload);
 app.get('/openstreetmap', openstreetmap.getOpenstreetMaps);
 app.get('/explain', explainController.getExplainMain);
 app.get('/explain/tutorial', explainController.getTutorial);
@@ -196,14 +200,30 @@ app.get('/explain/intro', explainController.getIntro);
 app.get('/explain/faq', explainController.getFAQ);
 
 
+let options = {
+  title: 'My Awesome Photo Gallery'
+};
+const Gallery = require('express-photo-gallery');
+
+app.use('/photos', Gallery('uploads', options));
 
 
-app.get('/picture/upload', passportConfig.isAuthenticated, pictureController.getFileUpload);
-app.post('/picture/upload', upload.array('myFile'), pictureController.postFileUpload);
-app.get('/form', passportConfig.isAuthenticated, formController.getForm);
-app.post('/form', formController.postForm);
-app.get('/picturetags', picture_tagController.getAllTags);
-app.post('/picturetags', picture_tagController.postNewTag);
+
+//app.get('/form', passportConfig.isAuthenticated, formController.getForm);
+//app.post('/form', formController.postForm);
+//app.get('/picturetags', picture_tagController.getAllTags);
+//app.post('/picturetags', picture_tagController.postNewTag);
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -258,9 +278,11 @@ helper.log('---------------- DB STARTUP ----------------');
 if (process.env.NODE_ENV === 'development') {
   // only use in development
   const importJSON = require('./controllers/applicationLogic/importJSON');
-  importJSON.wipeCollection();
-  importJSON.importLicencesFromJSON();
-  importJSON.importTagsFromJSON();
+  // importJSON.wipeCollection();
+  // importJSON.importLicencesFromJSON();
+  // importJSON.importTagsFromJSON();
+  const createThumbs = require('./controllers/applicationLogic/createThumbs');
+  // createThumbs.createThumbs();
 }
 helper.log('--------------- STARTUP DONE ---------------');
 

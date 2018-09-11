@@ -1,8 +1,11 @@
 const ExifImage = require('exif').ExifImage;
-const Picture = require('../models/Picture');
-const User = require('../models/User');
-const Licence = require('../models/Picture_Licence');
-const Gamification = require('./applicationLogic/gamification.js');
+const Picture = require('../../models/Picture');
+const User = require('../../models/User');
+const Licence = require('../../models/Picture_Licence');
+const Gamification = require('../applicationLogic/gamification.js');
+const createThumbs = require('../applicationLogic/createThumbs');
+
+const path = require('path');
 
 
 function saveFile(file, user, body) {
@@ -67,7 +70,7 @@ function saveAllFilesForUser(files, userId, body) {
 exports.getFileUpload = (req, res) => {
   Licence.find({}, (error, licences) => {
     if (error) console.log(error);
-    res.render('upload', {
+    res.render('picture/picture_upload', {
       title: 'File Upload',
       licences: licences
     });
@@ -77,16 +80,17 @@ exports.getFileUpload = (req, res) => {
 exports.postFileUpload = (req, res) => {
   if (!req.isAuthenticated()) {
     req.flash('errors', { msg: 'You must be logged in to perform this action' });
-    return res.redirect('/picture/upload');
+    return res.redirect('/picture/picture_upload');
   }
   if (!req.hasOwnProperty('files')) {
     req.flash('errors', { msg: 'Nothing to upload' });
-    return res.redirect('/picture/upload');
+    return res.redirect('/picture/picture_upload');
   }
   if (req.files.length === 0) {
     req.flash('errors', { msg: 'Nothing to upload' });
-    return res.redirect('/picture/upload');
+    return res.redirect('/picture/picture_upload');
   }
+
 
   saveAllFilesForUser(req.files, req.user.id, req.body).then(function (resolved, reject) {
     let saved = 0;
@@ -111,8 +115,9 @@ exports.postFileUpload = (req, res) => {
       }
     });
 
+    createThumbs.createThumbs();
     if (saved > 0) {
-      res.redirect('/form');
+      res.redirect('/picture/upload');
     } else {
       res.redirect('/picture/upload');
     }

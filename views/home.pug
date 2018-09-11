@@ -3,15 +3,17 @@ extends layout
 block content
   h1 HIP - Historical Pictures
   hr
-  .row
-    .col-md-6
-      p
-        a.btn.btn-raised(href='picture/picture_overview', role='button') Pictures
-  .row
-    .col-md-6
-      p
-        a.btn.btn-raised(href='/openstreetmap', role='button') Map
-  .row
-    .col-md-6
-      p
-        a.btn.btn-raised(href='/explain', role='button') Hilfe
+
+  .panel-group
+    .panel-default
+      .panel-heading
+        h2.panel-title Nützliche Links
+      .panel-body
+        .btn-group-vertical
+          a.btn.btn-raised(href='picture/picture_overview', role='button') Pictures overview
+          p
+          a.btn.btn-raised(href='/picture/picture_view', role='button') Picture view
+          p
+          a.btn.btn-raised(href='/openstreetmap', role='button') Map
+          p
+          a.btn.btn-raised(href='/explain', role='button') Hilfe
